@@ -1,10 +1,18 @@
 <template>
   <div id="app">
-    <router-link :to="{ name: 'home' }">home</router-link>
-    <router-link :to="{ name: 'list' }">list</router-link>
-    <router-link :to="{ name: 'detail' }">detail</router-link>
-    <router-link :to="{ name: 'search' }">search</router-link>
     <router-view />
+    <router-link :to="{ name: 'home' }"
+      ><img src="./assets/home.svg" alt="Home" width="20" height="20" />
+    </router-link>
+    <router-link :to="{ name: 'search' }"
+      ><img src="./assets/search.svg" alt="Search" width="20" height="20" />
+    </router-link>
+    <span
+      ><img src="./assets/discover.svg" alt="Discover" width="20" height="20" />
+    </span>
+    <span
+      ><img src="./assets/user.svg" alt="Profile" width="20" height="20"
+    /></span>
   </div>
 </template>
 
