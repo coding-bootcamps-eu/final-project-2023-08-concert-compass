@@ -9,7 +9,11 @@
     <button type="submit">Search</button>
   </form>
   <ul>
-    <li v-for="event in store.searchResult">{{ event.name }}</li>
+    <li v-for="event in store.searchResult" :key="event.id">
+      <router-link :to="{ name: 'detail', params: { id: event.id } }">{{
+        event.name
+      }}</router-link>
+    </li>
   </ul>
 </template>
 

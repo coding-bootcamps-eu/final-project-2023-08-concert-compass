@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const useStore = defineStore("concerts", {
   state() {
     return {
-      concerts: [],
+      concerts: [{ id: "123", name: "Test" }],
       searchResult: [],
       searchKeyword: "",
     };
@@ -12,8 +12,9 @@ export const useStore = defineStore("concerts", {
     addSearchResult(searchedConcerts) {
       this.searchResult = searchedConcerts;
     },
-    clear() {
-      //clear localStorage
+    getEventDataFromState(id) {
+      console.log(this.concerts.filter((concert) => concert.id === id));
+      return this.concerts.filter((concert) => concert.id === id);
     },
   },
   persist: true,
