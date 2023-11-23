@@ -1,5 +1,5 @@
 <template>
-  <h1>Hier ist die detail view</h1>
+  <h1>Hier ist die detail view für {{ $route.params.id }}</h1>
 </template>
 
 <script>
