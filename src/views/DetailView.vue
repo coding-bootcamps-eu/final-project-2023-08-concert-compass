@@ -10,13 +10,31 @@
   </div>
 
   <fieldset @change="store.addConcertToList($event.target.value)">
-    <input id="visited" name="list" type="radio" value="visited" />
+    <input
+      id="visited"
+      name="list"
+      type="radio"
+      value="visited"
+      :checked="store.currentConcert.status === 'visited'"
+    />
     <label for="visited">Visited</label>
 
-    <input id="wish" name="list" type="radio" value="wish" />
+    <input
+      id="wish"
+      name="list"
+      type="radio"
+      value="wish"
+      :checked="store.currentConcert.status === 'wish'"
+    />
     <label for="wish">Wishlist</label>
 
-    <input id="upcoming" name="list" type="radio" value="upcoming" />
+    <input
+      id="upcoming"
+      name="list"
+      type="radio"
+      value="upcoming"
+      :checked="store.currentConcert.status === 'upcoming'"
+    />
     <label for="upcoming">Upcoming</label>
   </fieldset>
 </template>
