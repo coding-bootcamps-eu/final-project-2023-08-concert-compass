@@ -34,6 +34,9 @@ export const useStore = defineStore("concerts", {
         );
       }
     },
+    getListByStatus(status) {
+      return this.concerts.filter((concert) => concert.status === status);
+    },
   },
   persist: true,
 });

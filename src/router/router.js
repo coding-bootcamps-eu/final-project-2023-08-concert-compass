@@ -8,7 +8,7 @@ const routes = [
     component: () => import("../views/DetailView.vue"),
   },
   {
-    path: "/list",
+    path: "/list/:status",
     name: "list",
     component: () => import("../views/ListView.vue"),
   },
