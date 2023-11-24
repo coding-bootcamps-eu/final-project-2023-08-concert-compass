@@ -1,12 +1,27 @@
 <template>
   <div>
+    <img :src="store.currentConcert.images[0].url" alt="" />
     <header>{{ store.currentConcert.name }}</header>
     <p v-if="store.currentConcert.rating">{{ store.currentConcert.rating }}</p>
-    <p>{{ store.currentConcert.locale }}</p>
-    <p>DE - Berlin</p>
+
+    <p>
+      {{ store.currentConcert._embedded.venues[0].city.name }},
+      {{ store.currentConcert._embedded.venues[0].postalCode }},
+      {{ store.currentConcert._embedded.venues[0].country.name }},
+    </p>
+
+    <p>{{ store.currentConcert._embedded.venues[0].address.line1 }}</p>
+
     <p>{{ store.currentConcert.dates.start.localDate }}</p>
-    <p>Pop</p>
-    <p>links</p>
+    <p>
+      {{ store.currentConcert.classifications[0].genre.name }},
+      {{ store.currentConcert.classifications[0].subGenre.name }}
+    </p>
+
+    <p>
+      links to Spotify & YouTube we need to fetch the attractions route from
+      ticketmaster API
+    </p>
   </div>
 
   <fieldset @change="store.addConcertToList($event.target.value)">
