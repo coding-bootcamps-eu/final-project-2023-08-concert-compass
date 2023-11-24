@@ -1,11 +1,13 @@
 <template>
-  <header>Concert name</header>
-  <p>Rating</p>
-  <p>Artist name</p>
-  <p>DE - Berlin</p>
-  <p>23/11/2023 20:00</p>
-  <p>Pop</p>
-  <p>Opening act</p>
+  <div>
+    <header>{{ store.currentConcert.name }}</header>
+    <p v-if="store.currentConcert.rating">{{ store.currentConcert.rating }}</p>
+    <p>{{ store.currentConcert.locale }}</p>
+    <p>DE - Berlin</p>
+    <p>{{ store.currentConcert.dates.start.localDate }}</p>
+    <p>Pop</p>
+    <p>links</p>
+  </div>
 
   <fieldset>
     <input id="visited" name="list" type="radio" value="visited" />
@@ -20,7 +22,14 @@
 </template>
 
 <script>
+import { useStore } from "../store.js";
+
 export default {
   name: "DetailView",
+  setup() {
+    return {
+      store: useStore(),
+    };
+  },
 };
 </script>

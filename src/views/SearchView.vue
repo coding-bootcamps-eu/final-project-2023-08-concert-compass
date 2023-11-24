@@ -9,7 +9,15 @@
     <button type="submit">Search</button>
   </form>
   <ul>
-    <li v-for="event in store.searchResult">{{ event.name }}</li>
+    <li
+      @click="store.setCurrentConcert(event.id)"
+      v-for="event in store.searchResult"
+      :key="event.id"
+    >
+      <router-link :to="{ name: 'detail', params: { id: event.id } }">{{
+        event.name
+      }}</router-link>
+    </li>
   </ul>
 </template>
 
@@ -17,9 +25,6 @@
 import { useStore } from "../store.js";
 export default {
   name: "SearchView",
-  data() {
-    return {};
-  },
   setup() {
     return {
       store: useStore(),
@@ -31,9 +36,7 @@ export default {
         `https://app.ticketmaster.com/discovery/v2/events.json?apikey=Q1xqcifyG0Ypi3cGI2x3IlwdsWJRcgtl&keyword=${this.store.searchKeyword}`
       );
       const data = await response.json();
-      const events = data._embedded.events;
-
-      this.store.addSearchResult(events);
+      this.store.searchResult = data._embedded.events;
     },
   },
 };
