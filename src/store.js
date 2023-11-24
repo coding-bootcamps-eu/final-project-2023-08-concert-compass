@@ -11,10 +11,6 @@ export const useStore = defineStore("concerts", {
   },
 
   actions: {
-    getEventDataFromState(id) {
-      console.log(this.concerts.filter((concert) => concert.id === id));
-      return this.concerts.filter((concert) => concert.id === id);
-    },
     setCurrentConcert(id) {
       const concertData = this.concerts.find((concert) => concert.id === id);
 
