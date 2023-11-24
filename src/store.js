@@ -6,15 +6,25 @@ export const useStore = defineStore("concerts", {
       concerts: [{ id: "123", name: "Test" }],
       searchResult: [],
       searchKeyword: "",
+      currentConcert: {},
     };
   },
+
   actions: {
-    addSearchResult(searchedConcerts) {
-      this.searchResult = searchedConcerts;
-    },
     getEventDataFromState(id) {
       console.log(this.concerts.filter((concert) => concert.id === id));
       return this.concerts.filter((concert) => concert.id === id);
+    },
+    setCurrentConcert(id) {
+      const concertData = this.concerts.find((concert) => concert.id === id);
+
+      if (concertData) {
+        this.currentConcert = concertData;
+      } else {
+        this.currentConcert = this.searchResult.find(
+          (concert) => concert.id === id
+        );
+      }
     },
   },
   persist: true,
