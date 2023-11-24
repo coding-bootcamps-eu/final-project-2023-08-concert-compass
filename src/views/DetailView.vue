@@ -9,7 +9,7 @@
     <p>links</p>
   </div>
 
-  <fieldset>
+  <fieldset @change="store.addConcertToList($event.target.value)">
     <input id="visited" name="list" type="radio" value="visited" />
     <label for="visited">Visited</label>
 

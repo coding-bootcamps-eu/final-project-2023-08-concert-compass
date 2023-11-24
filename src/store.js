@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const useStore = defineStore("concerts", {
   state() {
     return {
-      concerts: [{ id: "123", name: "Test" }],
+      concerts: [],
       searchResult: [],
       searchKeyword: "",
       currentConcert: {},
@@ -11,6 +11,18 @@ export const useStore = defineStore("concerts", {
   },
 
   actions: {
+    addConcertToList(status) {
+      if (!this.concerts.includes(this.currentConcert)) {
+        this.currentConcert.status = status;
+        this.currentConcert.rating = 0;
+        this.concerts.push(this.currentConcert);
+      } else {
+        const currentConcertIndex = this.concerts.findIndex(
+          (concert) => concert.id === this.currentConcert.id
+        );
+        this.concerts[currentConcertIndex].status = status;
+      }
+    },
     setCurrentConcert(id) {
       const concertData = this.concerts.find((concert) => concert.id === id);
 
