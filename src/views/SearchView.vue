@@ -29,12 +29,21 @@
 
 <script>
 import { useStore } from "../store.js";
+
 export default {
   name: "SearchView",
   setup() {
     return {
       store: useStore(),
     };
+  },
+  beforeCreate() {
+    const currentTime = new Date().getTime();
+    const timeDifference =
+      Math.abs(currentTime - this.store.searchTimestamp) / 1000;
+    if (timeDifference > 10) {
+      this.store.searchResult = [];
+    }
   },
   methods: {
     async searchForConcerts() {
@@ -43,6 +52,7 @@ export default {
       );
       const data = await response.json();
       this.store.searchResult = data._embedded.events;
+      this.store.searchTimestamp = new Date().getTime();
     },
   },
 };
