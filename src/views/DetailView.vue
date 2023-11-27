@@ -1,21 +1,24 @@
 <template>
+  <div v-if="!currentConcert">
+    <router-link :to="{ name: 'home' }">Go back to Home</router-link>
+  </div>
   <div>
-    <img :src="store.currentConcert.images[0].url" alt="" />
-    <header>{{ store.currentConcert.name }}</header>
-    <p v-if="store.currentConcert.rating">{{ store.currentConcert.rating }}</p>
+    <img :src="currentConcert.images[0].url" alt="" />
+    <header>{{ currentConcert.name }}</header>
+    <p v-if="currentConcert.rating">{{ currentConcert.rating }}</p>
 
     <p>
-      {{ store.currentConcert._embedded.venues[0].city.name }},
-      {{ store.currentConcert._embedded.venues[0].postalCode }},
-      {{ store.currentConcert._embedded.venues[0].country.name }},
+      {{ currentConcert._embedded.venues[0].city.name }},
+      {{ currentConcert._embedded.venues[0].postalCode }},
+      {{ currentConcert._embedded.venues[0].country.name }},
     </p>
 
-    <p>{{ store.currentConcert._embedded.venues[0].address.line1 }}</p>
+    <p>{{ currentConcert._embedded.venues[0].address.line1 }}</p>
 
-    <p>{{ store.currentConcert.dates.start.localDate }}</p>
+    <p>{{ currentConcert.dates.start.localDate }}</p>
     <p>
-      {{ store.currentConcert.classifications[0].genre.name }},
-      {{ store.currentConcert.classifications[0].subGenre.name }}
+      {{ currentConcert.classifications[0].genre.name }},
+      {{ currentConcert.classifications[0].subGenre.name }}
     </p>
 
     <p>
@@ -24,13 +27,15 @@
     </p>
   </div>
 
-  <fieldset @change="store.addConcertToList($event.target.value)">
+  <fieldset
+    @change="store.addConcertToList($event.target.value, this.currentConcert)"
+  >
     <input
       id="visited"
       name="list"
       type="radio"
       value="visited"
-      :checked="store.currentConcert.status === 'visited'"
+      :checked="currentConcert.status === 'visited'"
     />
     <label for="visited">Visited</label>
 
@@ -39,7 +44,7 @@
       name="list"
       type="radio"
       value="wish"
-      :checked="store.currentConcert.status === 'wish'"
+      :checked="currentConcert.status === 'wish'"
     />
     <label for="wish">Wishlist</label>
 
@@ -48,7 +53,7 @@
       name="list"
       type="radio"
       value="upcoming"
-      :checked="store.currentConcert.status === 'upcoming'"
+      :checked="currentConcert.status === 'upcoming'"
     />
     <label for="upcoming">Upcoming</label>
   </fieldset>
@@ -63,6 +68,11 @@ export default {
     return {
       store: useStore(),
     };
+  },
+  computed: {
+    currentConcert() {
+      return this.store.getConcertById(this.$route.params.id);
+    },
   },
 };
 </script>
