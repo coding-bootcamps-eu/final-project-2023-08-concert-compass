@@ -8,8 +8,9 @@
     />
     <button class="bg-indigo-500" type="submit">Search</button>
   </form>
-  <label for="search-results">Search Results:</label>
-  <ul id="search-results">
+  <p v-if="error">{{ error }}</p>
+  <label v-if="!error" for="search-results">Search Results:</label>
+  <ul v-if="!error" id="search-results">
     <li v-for="event in store.searchResult" :key="event.id">
       <router-link
         v-if="event._embedded"
@@ -36,13 +37,22 @@ export default {
       store: useStore(),
     };
   },
+  data() {
+    return {
+      error: "",
+    };
+  },
   methods: {
     async searchForConcerts() {
+      this.error = "";
       const response = await fetch(
         `https://app.ticketmaster.com/discovery/v2/events.json?apikey=Q1xqcifyG0Ypi3cGI2x3IlwdsWJRcgtl&keyword=${this.store.searchKeyword}`
       );
       const data = await response.json();
-      this.store.searchResult = data._embedded.events;
+      if (data._embedded === undefined) {
+        console.log("hit");
+        return (this.error = "Sorry, there is no match to your search.");
+      } else this.store.searchResult = data._embedded.events;
     },
   },
 };
