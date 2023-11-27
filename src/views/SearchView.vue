@@ -6,7 +6,7 @@
       v-model.trim="store.searchKeyword"
       placeholder="Search for artists"
     />
-    <button type="submit">Search</button>
+    <button class="bg-indigo-500" type="submit">Search</button>
   </form>
   <ul>
     <li
