@@ -11,8 +11,15 @@
   <label for="search-results">Search Results:</label>
   <ul id="search-results">
     <li v-for="event in store.searchResult" :key="event.id">
-      <router-link :to="{ name: 'detail', params: { id: event.id } }"
-        >{{ event.name }} {{ event._embedded.venues[0].city.name }}
+      <router-link
+        v-if="event._embedded"
+        :to="{ name: 'detail', params: { id: event.id } }"
+        >{{ event.name }}
+        {{
+          event._embedded.venues[0].city.name
+            ? event._embedded.venues[0].city.name
+            : ""
+        }}
         {{ event._embedded.venues[0].country.name }}
         {{ event.dates.start.localDate }}</router-link
       >

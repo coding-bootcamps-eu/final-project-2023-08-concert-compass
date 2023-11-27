@@ -16,9 +16,8 @@
     <p>{{ currentConcert._embedded.venues[0].address.line1 }}</p>
 
     <p>{{ currentConcert.dates.start.localDate }}</p>
-    <p>
+    <p v-if="currentConcert.classifications[0].genre.name">
       {{ currentConcert.classifications[0].genre.name }},
-      {{ currentConcert.classifications[0].subGenre.name }}
     </p>
 
     <p>
