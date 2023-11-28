@@ -5,6 +5,7 @@ export const useStore = defineStore("concerts", {
     return {
       concerts: [],
       searchResult: [],
+      searchTimestamp: 0,
       searchKeyword: "",
     };
   },

@@ -30,6 +30,7 @@
 
 <script>
 import { useStore } from "../store.js";
+
 export default {
   name: "SearchView",
   setup() {
@@ -37,10 +38,20 @@ export default {
       store: useStore(),
     };
   },
+
+  beforeCreate() {
+    const currentTime = new Date().getTime();
+    const timeDifference =
+      Math.abs(currentTime - this.store.searchTimestamp) / 1000;
+    if (timeDifference > 10) {
+      this.store.searchResult = [];
+    }
+
   data() {
     return {
       error: "",
     };
+
   },
   methods: {
     async searchForConcerts() {
@@ -49,6 +60,7 @@ export default {
         `https://app.ticketmaster.com/discovery/v2/events.json?apikey=Q1xqcifyG0Ypi3cGI2x3IlwdsWJRcgtl&keyword=${this.store.searchKeyword}`
       );
       const data = await response.json();
+      this.store.searchTimestamp = new Date().getTime();
       if (data._embedded === undefined) {
         return (this.error = "Sorry, there is no match to your search.");
       } else this.store.searchResult = data._embedded.events;
