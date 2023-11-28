@@ -2,21 +2,26 @@
   <div v-if="!currentConcert">
     <router-link :to="{ name: 'home' }">Go back to Home</router-link>
   </div>
-  <div class="grid grid-rows-3">
-    <header
-      class="h-48 border rounded-b-3xl"
-      :style="{ backgroundImage: `url(${currentConcert.images[0].url})` }"
-    >
-      <h1 class="text-white-color m-0">{{ currentConcert.name }}</h1>
-    </header>
-    <div class="">
+  <div class="grid grid-row">
+    <div>
+      <header
+        class="align-items-start h-48 p-2 border rounded-3xl flex sticky top-0 justify-center font-sans bg-cover"
+        :style="{ backgroundImage: `url(${currentConcert.images[0].url})` }"
+      >
+        <h1 class="text-white-color m-0">{{ currentConcert.name }}</h1>
+      </header>
+    </div>
+
+    <div class="py-2 text-lg">
       <!-- Rating Stars -->
-      <div class="flex items-center text-orange-color">
+      <div
+        class="flex items-center text-orange-color items-end justify-center px-2"
+      >
         <svg
-          class="w-4 h-4 text-yellow-300 ms-1"
+          class="items-center w-4 h-4 text-yellow-300 ms-1"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
+          :style="{ fill: currentConcert.rating >= 1 ? currentColor : '' }"
           viewBox="0 0 22 20"
         >
           <path
@@ -68,10 +73,12 @@
           />
         </svg>
       </div>
-      <!-- Artist Name -->
-      <p>Artist Name PLACEHOLDER</p>
-      <!-- Date & Time -->
-      <div class="flex space-x-2 mt-2">
+      <div class="py-8 font-sans mb-0">
+        <!-- Artist Name -->
+        <p>Artist Name PLACEHOLDER</p>
+        <!-- Date & Time -->
+      </div>
+      <div class="flex space-x-2 mt-2 py-8 font-sans ml-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           id="Layer_1"
@@ -91,8 +98,8 @@
       </div>
 
       <!-- Location -->
-      <div class="flex flex-col content-start">
-        <div class="flex space-x-2">
+      <div class="flex flex-col content-start break-words">
+        <div class="flex space-x-2 font-sans ml-2 mt-0">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             id="Layer_1"
@@ -110,15 +117,16 @@
             {{ currentConcert._embedded.venues[0].name }}
           </h6>
         </div>
-        <p class="text-sm self-start ml-7 text-gray-ash mt-2">
+        <p class="text-sm self-start ml-7 text-gray-ash mt-2 text-left">
           {{ currentConcert._embedded.venues[0].address.line1 }},
           {{ currentConcert._embedded.venues[0].postalCode }},
+          <br />
           {{ currentConcert._embedded.venues[0].city.name }},
           {{ currentConcert._embedded.venues[0].country.name }}
         </p>
       </div>
       <!-- Genre -->
-      <div class="flex space-x-2 mt-2">
+      <div class="flex space-x-2 mt-4 font-sans ml-2">
         <svg
           id="Layer_1"
           height="20"
@@ -136,11 +144,11 @@
         </p>
       </div>
       <!-- Links -->
-      <p>links to Spotify & YouTube</p>
     </div>
+    <p class="justify-center font-sans py-14">links to Spotify & YouTube</p>
 
     <fieldset
-      class="text-white-color"
+      class="text-white-color ml-20"
       @change="store.addConcertToList($event.target.value, this.currentConcert)"
     >
       <input

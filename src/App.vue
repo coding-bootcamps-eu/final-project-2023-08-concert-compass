@@ -1,8 +1,8 @@
 <template>
-  <div id="app">
-    <router-view />
+  <div class="grid grid-rows-[1fr,auto] h-screen overflow-hidden">
+    <div class="overflow-auto"><router-view /></div>
     <nav class="grid grid-cols-4 place-content-evenly justify-items-center">
-      <router-link :to="{ name: 'home' }"
+      <router-link class="" :to="{ name: 'home' }"
         ><img src="./assets/home.svg" alt="Home" width="20" height="20" />
       </router-link>
       <router-link :to="{ name: 'search' }"
@@ -28,12 +28,3 @@ export default {
   name: "App",
 };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
