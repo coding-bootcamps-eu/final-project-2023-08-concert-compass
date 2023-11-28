@@ -1,47 +1,69 @@
 <template>
-  <div class="bg-#2E223C">
-    <form action="" @submit.prevent="searchForConcerts">
+  <header
+    class="border-transparent rounded-b-lg h-1/4 flex items-center justify-center"
+  >
+    <h1 class="text-3xl font-bold">Search</h1>
+  </header>
+  <main class="mx-6">
+    <form class="flex" @submit.prevent="searchForConcerts">
       <input
-        class="bg-gray-100 border-2 border-gray-200 focus:border-blue-500 rounded px-2 py-2 text-sm text-gray-700 placeholder-gray-400 placeholder-italic focus-outline-none w-full focus:ring-2"
+        class="border border-gray-ash rounded-lg shadow-xl p-2 w-[90%] focus:outline-blue placeholder:text-slate-400 tracking-wide"
         type="text"
         v-model.trim="store.searchKeyword"
         placeholder="Search for artists"
       />
       <button
-        class="bg-black text-white w-full border-4 border-gray-200 focus:border-yellow-500 space-y-4"
+        class="border border-gray-ash py-2 px-4 rounded-lg ml-6 shadow-xl font-semibold tracking-wide"
         type="submit"
       >
-        Search
+        <svg
+          class="fill-gray-ash"
+          xmlns="http://www.w3.org/2000/svg"
+          id="Outline"
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+        >
+          <path
+            d="M23.707,22.293l-5.969-5.969a10.016,10.016,0,1,0-1.414,1.414l5.969,5.969a1,1,0,0,0,1.414-1.414ZM10,18a8,8,0,1,1,8-8A8.009,8.009,0,0,1,10,18Z"
+          />
+        </svg>
       </button>
     </form>
-    <p v-if="error">{{ error }}</p>
-    <label
-      v-if="!error"
-      for="search-results"
-      class="mt-4 font-bold space-y-2 text-gray-400"
-      >Search Results:</label
-    >
-    <ul v-if="!error" id="search-results">
-      <li
-        class="grid grid-cols-1 text-left border-2 border-black-solid h-16 group/item hover:bg-slate-100"
-        v-for="event in store.searchResult"
-        :key="event.id"
-      >
-        <router-link
-          v-if="event._embedded"
-          :to="{ name: 'detail', params: { id: event.id } }"
-          >{{ event.name }}
-          {{
-            event._embedded.venues[0].city.name
-              ? event._embedded.venues[0].city.name
-              : ""
-          }}
-          {{ event._embedded.venues[0].country.name }}
-          {{ event.dates.start.localDate }}</router-link
+    <section class="mt-4">
+      <p v-if="error">{{ error }}</p>
+
+      <ul class="mt-8" v-if="!error" id="search-results">
+        <li
+          class="border-transparent rounded-lg text-white-color shadow-xl mt-4 bg-cover max-w-[550px] min-h-min"
+          v-for="event in store.searchResult"
+          :key="event.id"
+          :style="{ backgroundImage: `url(${event.images?.[0].url})` }"
         >
-      </li>
-    </ul>
-  </div>
+          <router-link
+            v-if="event._embedded"
+            :to="{ name: 'detail', params: { id: event.id } }"
+          >
+            <div class="h-fit w-full bg-gray-overlay rounded-lg">
+              <div class="p-4">
+                <h6 class="text-lg font-semibold">{{ event.name }}</h6>
+
+                <p class="text-sm">
+                  {{
+                    event._embedded.venues[0].city.name
+                      ? event._embedded.venues[0].city.name
+                      : ""
+                  }}
+                  {{ event._embedded.venues[0].country.countryCode }}
+                </p>
+                <p class="text-sm">{{ event.dates.start.localDate }}</p>
+              </div>
+            </div></router-link
+          >
+        </li>
+      </ul>
+    </section>
+  </main>
 </template>
 
 <script>
