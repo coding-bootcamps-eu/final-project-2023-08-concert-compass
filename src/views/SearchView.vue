@@ -56,7 +56,7 @@ export default {
     async searchForConcerts() {
       this.error = "";
       const response = await fetch(
-        `https://app.ticketmaster.com/discovery/v2/events.json?apikey=Q1xqcifyG0Ypi3cGI2x3IlwdsWJRcgtl&keyword=${this.store.searchKeyword}`
+        `https://app.ticketmaster.com/discovery/v2/events.json?apikey=Q1xqcifyG0Ypi3cGI2x3IlwdsWJRcgtl&keyword=${this.store.searchKeyword}&classificationName=Music`
       );
       const data = await response.json();
       this.store.searchTimestamp = new Date().getTime();
