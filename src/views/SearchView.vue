@@ -50,7 +50,6 @@ export default {
       );
       const data = await response.json();
       if (data._embedded === undefined) {
-        console.log("hit");
         return (this.error = "Sorry, there is no match to your search.");
       } else this.store.searchResult = data._embedded.events;
     },
