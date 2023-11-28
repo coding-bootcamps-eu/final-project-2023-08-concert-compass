@@ -21,7 +21,7 @@
           class="items-center w-4 h-4 text-yellow-300 ms-1"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
-          :style="{ fill: currentConcert.rating >= 1 ? currentColor : '' }"
+          fill="currentColor"
           viewBox="0 0 22 20"
         >
           <path
@@ -145,21 +145,6 @@
       </div>
       <!-- Links -->
     </div>
-    <p class="justify-center font-sans py-14">links to Spotify & YouTube</p>
-
-    <input
-      id="visited"
-      name="list"
-      type="radio"
-      value="visited"
-      :checked="currentConcert.status === 'visited'"
-    />
-    <label for="visited">Visited</label>
-
-    <p>
-      links to Spotify & YouTube we need to fetch the attractions route from
-      ticketmaster API
-    </p>
   </div>
 
   <form v-if="hasStatus" @submit.prevent="currentConcert.notes = notes">
@@ -220,10 +205,10 @@
     Remove from List
   </button>
   <template v-if="currentArtist">
-    <a :href="currentArtist.attractions[0].externalLinks.spotify[0].url"
+    <a :href="currentArtist.attractions?.[0].externalLinks?.spotify?.[0].url"
       >Spotify</a
     >
-    <a :href="currentArtist.attractions[0].externalLinks.youtube[0].url"
+    <a :href="currentArtist.attractions?.[0].externalLinks?.youtube?.[0].url"
       >Youtube</a
     >
     <h2>Artist Name: {{ currentArtist.attractions[0].name }}</h2>
@@ -259,6 +244,8 @@ export default {
   },
 
   created() {
+    this.notes = this.currentConcert.notes ?? "";
+
     if (this.currentConcert._embedded.attractions?.[0]?.id == undefined) {
       return;
     }
@@ -268,9 +255,6 @@ export default {
       .then((response) => response.json())
       .then((data) => (this.currentArtist = data._embedded))
       .catch((error) => console.log(error));
-  },
-  created() {
-    this.notes = this.currentConcert.notes ?? "";
   },
 };
 </script>
