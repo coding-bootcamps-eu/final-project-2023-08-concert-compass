@@ -147,18 +147,14 @@
     </div>
     <p class="justify-center font-sans py-14">links to Spotify & YouTube</p>
 
-    <fieldset
-      class="text-white-color ml-20"
-      @change="store.addConcertToList($event.target.value, this.currentConcert)"
-    >
-      <input
-        id="visited"
-        name="list"
-        type="radio"
-        value="visited"
-        :checked="currentConcert.status === 'visited'"
-      />
-      <label for="visited">Visited</label>
+    <input
+      id="visited"
+      name="list"
+      type="radio"
+      value="visited"
+      :checked="currentConcert.status === 'visited'"
+    />
+    <label for="visited">Visited</label>
 
     <p>
       links to Spotify & YouTube we need to fetch the attractions route from
@@ -244,10 +240,10 @@ export default {
       store: useStore(),
     };
   },
-data() {
+  data() {
     return {
       currentArtist: null,
-      notes: ""
+      notes: "",
     };
   },
   computed: {
