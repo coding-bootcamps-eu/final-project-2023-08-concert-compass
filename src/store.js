@@ -5,6 +5,7 @@ export const useStore = defineStore("concerts", {
     return {
       concerts: [],
       searchResult: [],
+      searchTimestamp: 0,
       searchKeyword: "",
     };
   },
@@ -16,6 +17,7 @@ export const useStore = defineStore("concerts", {
           ...concert,
           status,
           rating: 0,
+          notes: "",
         });
       } else {
         const currentConcertIndex = this.concerts.findIndex(
@@ -32,6 +34,9 @@ export const useStore = defineStore("concerts", {
     },
     getListByStatus(status) {
       return this.concerts.filter((concert) => concert.status === status);
+    },
+    removeConcertFromList(id) {
+      this.concerts = this.concerts.filter((c) => c.id !== id);
     },
   },
   persist: true,
