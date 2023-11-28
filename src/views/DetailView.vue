@@ -77,14 +77,15 @@
   >
     Remove from List
   </button>
-
-  <a :href="currentArtist.attractions[0].externalLinks.spotify[0].url"
-    >Spotify</a
-  >
-  <a :href="currentArtist.attractions[0].externalLinks.youtube[0].url"
-    >Youtube</a
-  >
-  <h2>Artist Name: {{ currentArtist.attractions[0].name }}</h2>
+  <template v-if="currentArtist">
+    <a :href="currentArtist.attractions[0].externalLinks.spotify[0].url"
+      >Spotify</a
+    >
+    <a :href="currentArtist.attractions[0].externalLinks.youtube[0].url"
+      >Youtube</a
+    >
+    <h2>Artist Name: {{ currentArtist.attractions[0].name }}</h2>
+  </template>
 </template>
 
 <script>
@@ -99,7 +100,7 @@ export default {
   },
   data() {
     return {
-      currentArtist: {},
+      currentArtist: null,
     };
   },
   computed: {
@@ -115,17 +116,15 @@ export default {
   },
 
   created() {
-    console.log(this.currentConcert._embedded.attractions[0].id);
-    if (this.currentConcert._embedded.attractions[0].id === undefined) {
+    if (this.currentConcert._embedded.attractions?.[0]?.id == undefined) {
       return;
-    } else {
-      fetch(
-        `https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=Q1xqcifyG0Ypi3cGI2x3IlwdsWJRcgtl&id=${this.currentConcert._embedded.attractions[0].id}`
-      )
-        .then((response) => response.json())
-        .then((data) => (this.currentArtist = data._embedded))
-        .catch((error) => console.log(error));
     }
+    fetch(
+      `https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=Q1xqcifyG0Ypi3cGI2x3IlwdsWJRcgtl&id=${this.currentConcert._embedded.attractions[0].id}`
+    )
+      .then((response) => response.json())
+      .then((data) => (this.currentArtist = data._embedded))
+      .catch((error) => console.log(error));
   },
 };
 </script>
