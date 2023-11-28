@@ -46,12 +46,11 @@ export default {
     if (timeDifference > 10) {
       this.store.searchResult = [];
     }
-
+  },
   data() {
     return {
       error: "",
     };
-
   },
   methods: {
     async searchForConcerts() {
