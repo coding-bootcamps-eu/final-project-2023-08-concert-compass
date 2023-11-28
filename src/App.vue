@@ -1,7 +1,9 @@
 <template>
   <div class="grid grid-rows-[1fr,auto] h-screen overflow-hidden">
     <div class="overflow-auto"><router-view /></div>
-    <nav class="grid grid-cols-4 place-content-evenly justify-items-center">
+    <nav
+      class="grid grid-cols-4 place-content-evenly justify-items-center py-6"
+    >
       <router-link class="" :to="{ name: 'home' }"
         ><img src="./assets/home.svg" alt="Home" width="20" height="20" />
       </router-link>
