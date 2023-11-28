@@ -5,37 +5,38 @@ export const useStore = defineStore("concerts", {
     return {
       concerts: [],
       searchResult: [],
+      searchTimestamp: 0,
       searchKeyword: "",
-      currentConcert: {},
     };
   },
 
   actions: {
-    addConcertToList(status) {
-      if (!this.concerts.includes(this.currentConcert)) {
-        this.currentConcert.status = status;
-        this.currentConcert.rating = 0;
-        this.concerts.push(this.currentConcert);
+    addConcertToList(status, concert) {
+      if (!this.concerts.some((c) => c.id === concert.id)) {
+        this.concerts.push({
+          ...concert,
+          status,
+          rating: 0,
+          notes: "",
+        });
       } else {
         const currentConcertIndex = this.concerts.findIndex(
-          (concert) => concert.id === this.currentConcert.id
+          (c) => c.id === concert.id
         );
         this.concerts[currentConcertIndex].status = status;
       }
     },
-    setCurrentConcert(id) {
-      const concertData = this.concerts.find((concert) => concert.id === id);
-
-      if (concertData) {
-        this.currentConcert = concertData;
-      } else {
-        this.currentConcert = this.searchResult.find(
-          (concert) => concert.id === id
-        );
-      }
+    getConcertById(id) {
+      return (
+        this.concerts.find((concert) => concert.id === id) ||
+        this.searchResult.find((concert) => concert.id === id)
+      );
     },
     getListByStatus(status) {
       return this.concerts.filter((concert) => concert.status === status);
+    },
+    removeConcertFromList(id) {
+      this.concerts = this.concerts.filter((c) => c.id !== id);
     },
   },
   persist: true,
