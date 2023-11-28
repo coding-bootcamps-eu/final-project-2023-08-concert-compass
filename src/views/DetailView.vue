@@ -165,7 +165,8 @@
       ticketmaster API
     </p>
   </div>
-  <form v-if="hasStatus" @submit.prevent="">
+
+  <form v-if="hasStatus" @submit.prevent="currentConcert.notes = notes">
     <label for="notes">Notes</label>
     <textarea
       v-model="currentConcert.notes"
@@ -175,7 +176,12 @@
       id="notes"
       placeholder="Write some notes about the concert"
     ></textarea>
-    <button class="mt-6 bg-blue-500 py-2 px-3 text-white" @click="">
+
+    <button
+      v-if="notes !== this.currentConcert.notes"
+      class="mt-6 bg-blue-500 py-2 px-3 text-white"
+      type="submit"
+    >
       Save
     </button>
   </form>
@@ -241,6 +247,7 @@ export default {
 data() {
     return {
       currentArtist: null,
+      notes: ""
     };
   },
   computed: {
@@ -265,6 +272,9 @@ data() {
       .then((response) => response.json())
       .then((data) => (this.currentArtist = data._embedded))
       .catch((error) => console.log(error));
+  },
+  created() {
+    this.notes = this.currentConcert.notes ?? "";
   },
 };
 </script>
