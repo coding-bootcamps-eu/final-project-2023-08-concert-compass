@@ -2,14 +2,14 @@
   <header
     class="border-transparent rounded-b-lg h-1/4 flex items-center justify-center"
   >
-    <h1 class="text-3xl font-bold text-center">
+    <h1 class="text-3xl font-bold text-center px-4">
       Welcome to your own Concert Compass!
     </h1>
   </header>
   <main class="mx-6">
     <ul>
       <li
-        class="border border-gray-ash rounded-lg shadow-xl mt-4 bg-cover max-w-[500px] min-h-min p-4"
+        class="border border-gray-ash rounded-lg shadow-xl mt-4 bg-cover min-h-min p-4"
       >
         <router-link
           class="flex space-x-4"
@@ -33,7 +33,7 @@
         </router-link>
       </li>
       <li
-        class="border border-gray-ash rounded-lg shadow-xl mt-4 bg-cover max-w-[500px] min-h-min p-4"
+        class="border border-gray-ash rounded-lg shadow-xl mt-4 bg-cover min-h-min p-4"
       >
         <router-link
           class="flex space-x-4"
@@ -57,7 +57,7 @@
         >
       </li>
       <li
-        class="border border-gray-ash rounded-lg shadow-xl mt-4 bg-cover max-w-[500px] min-h-min p-4"
+        class="border border-gray-ash rounded-lg shadow-xl mt-4 bg-cover min-h-min p-4"
       >
         <router-link
           class="flex space-x-4"
