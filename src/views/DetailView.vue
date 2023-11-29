@@ -9,7 +9,7 @@
   >
     <router-link
       v-if="!hasStatus"
-      class="fixed top-6 left-6"
+      class="absolute top-6 left-6"
       :to="{ name: 'search' }"
     >
       <svg
@@ -29,7 +29,7 @@
     </router-link>
     <router-link
       v-if="hasStatus"
-      class="fixed top-6 left-6"
+      class="absolute top-6 left-6"
       :to="{ name: 'list', params: { status: currentConcert.status } }"
     >
       <svg

@@ -2,7 +2,7 @@
   <header
     class="border-transparent rounded-b-lg h-1/4 flex items-center justify-center relative"
   >
-    <router-link class="fixed top-6 left-6" :to="{ name: 'home' }">
+    <router-link class="absolute top-6 left-6" :to="{ name: 'home' }">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
