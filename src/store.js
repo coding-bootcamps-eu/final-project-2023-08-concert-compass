@@ -36,7 +36,13 @@ export const useStore = defineStore("concerts", {
       return this.concerts.filter((concert) => concert.status === status);
     },
     removeConcertFromList(id) {
-      this.concerts = this.concerts.filter((c) => c.id !== id);
+      if (
+        confirm(
+          "Are you sure you want to remove this concert? Your notes will be deleted."
+        )
+      ) {
+        this.concerts = this.concerts.filter((c) => c.id !== id);
+      }
     },
   },
   persist: true,
