@@ -133,7 +133,7 @@
         <label for="notes">Notes</label>
         <textarea
           v-model="currentConcert.notes"
-          class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 border-gray-ash shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
           type="text"
           name="concert-notes"
           id="notes"
@@ -142,7 +142,7 @@
 
         <button
           v-if="notes !== this.currentConcert.notes"
-          class="mt-6 bg-blue-500 py-2 px-3 text-white"
+          class="mt-2 bg-white-color py-2 px-3 hover:bg-gray-ash text-sm text-black-color border-2 border-gray-ash rounded"
           type="submit"
         >
           Save
@@ -150,50 +150,75 @@
       </form>
 
       <fieldset
+        class="py-4 flex"
         @change="
           store.addConcertToList($event.target.value, this.currentConcert)
         "
         id="lists"
       >
-        <input
-          id="visited"
-          name="list"
-          type="radio"
-          value="visited"
-          :checked="currentConcert.status === 'visited'"
-        />
-        <label for="visited">Visited</label>
-
-        <input
-          id="wish"
-          name="list"
-          type="radio"
-          value="wish"
-          :checked="currentConcert.status === 'wish'"
-        />
-        <label for="wish">Wishlist</label>
-
-        <input
-          id="upcoming"
-          name="list"
-          type="radio"
-          value="upcoming"
-          :checked="currentConcert.status === 'upcoming'"
-        />
-        <label for="upcoming">Upcoming</label>
+        <div>
+          <input
+            class="peer hidden"
+            id="visited"
+            name="list"
+            type="radio"
+            value="visited"
+            :checked="currentConcert.status === 'visited'"
+          />
+          <label
+            class="capitalize hover:uppercase text-gray-ash font-semibold cursor-pointer rounded-lg border border-gray-ash p-2 peer-checked:bg-black-color peer-checked:text-white-color select-none"
+            for="visited"
+            >Visited</label
+          >
+        </div>
+        <div class="px-2">
+          <input
+            class="peer hidden"
+            id="wish"
+            name="list"
+            type="radio"
+            value="wish"
+            :checked="currentConcert.status === 'wish'"
+          />
+          <label
+            class="capitalize hover:uppercase text-gray-ash font-semibold cursor-pointer rounded-lg border border-gray-ash p-2 peer-checked:bg-black-color peer-checked:text-white-color select-none"
+            for="wish"
+            >Wishlist</label
+          >
+        </div>
+        <div class="px-2">
+          <input
+            class="peer hidden"
+            id="upcoming"
+            name="list"
+            type="radio"
+            value="upcoming"
+            :checked="currentConcert.status === 'upcoming'"
+          />
+          <label
+            class="capitalize hover:uppercase text-gray-ash font-semibold cursor-pointer rounded-lg border border-gray-ash p-2 peer-checked:bg-black-color peer-checked:text-white-color select-none"
+            for="upcoming"
+            >Upcoming</label
+          >
+        </div>
       </fieldset>
       <button
+        class="mt-2 bg-black-color py-2 px-3 text-sm text-white-color border-2 border-black rounded-lg capitalize hover:uppercase"
         v-if="hasStatus"
         @click="store.removeConcertFromList($route.params.id)"
       >
         Remove from List
       </button>
+
       <template v-if="currentArtist">
         <a
+          class="px-4 capitalize hover:uppercase"
           :href="currentArtist.attractions?.[0].externalLinks?.spotify?.[0].url"
           >Spotify</a
         >
+
         <a
+          class="capitalize hover:uppercase"
           :href="currentArtist.attractions?.[0].externalLinks?.youtube?.[0].url"
           >Youtube</a
         >

@@ -13,7 +13,7 @@
         placeholder="Search for artists"
       />
       <button
-        class="border border-gray-ash py-2 px-4 rounded-lg ml-6 shadow-xl font-semibold tracking-wide"
+        class="border border-gray-ash py-2 px-4 rounded-lg ml-6 shadow-xl font-semibold tracking-wide capitalize cursor-pointer"
         type="submit"
       >
         <svg
