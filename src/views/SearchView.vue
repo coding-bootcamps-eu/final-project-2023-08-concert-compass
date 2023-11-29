@@ -35,7 +35,7 @@
 
       <ul class="mt-8" v-if="!error" id="search-results">
         <li
-          class="border-transparent rounded-lg text-white-color shadow-xl mt-4 bg-cover min-h-min"
+          class="border-transparent rounded-lg text-white shadow-xl mt-4 bg-cover min-h-min"
           v-for="event in store.searchResult"
           :key="event.id"
           :style="{ backgroundImage: `url(${event.images?.[0].url})` }"
@@ -81,7 +81,7 @@ export default {
     const currentTime = new Date().getTime();
     const timeDifference =
       Math.abs(currentTime - this.store.searchTimestamp) / 1000;
-    if (timeDifference > 10) {
+    if (timeDifference > 120) {
       this.store.searchResult = [];
     }
   },

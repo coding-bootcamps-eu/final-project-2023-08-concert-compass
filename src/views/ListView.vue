@@ -31,7 +31,7 @@
   <main class="mx-6">
     <ul class="mt-18">
       <li
-        class="border-transparent rounded-lg shadow-xl mt-4 text-white-color bg-cover min-h-min"
+        class="border-transparent rounded-lg shadow-xl mt-4 text-white bg-cover min-h-min"
         v-for="concert of currentList"
         :key="concert.id"
         :style="{ backgroundImage: `url(${concert.images?.[0].url})` }"
