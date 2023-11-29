@@ -129,7 +129,7 @@
 
     <section class="border-transparent rounden-t-lg px-6 py-6">
       <!-- Add to List -->
-      <form v-if="hasStatus" @submit.prevent="currentConcert.notes = notes">
+      <form v-if="hasStatus" @submit.prevent="notes = currentConcert.notes">
         <label for="notes">Notes</label>
         <textarea
           v-model="currentConcert.notes"
