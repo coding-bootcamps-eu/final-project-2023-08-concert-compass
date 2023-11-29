@@ -13,7 +13,7 @@
         placeholder="Search for artists"
       />
       <button
-        class="border border-gray-ash py-2 px-4 rounded-lg ml-6 shadow-xl font-semibold tracking-wide"
+        class="border border-gray-ash py-2 px-4 rounded-lg ml-6 shadow-xl font-semibold tracking-wide capitalize cursor-pointer"
         type="submit"
       >
         <svg
@@ -35,7 +35,7 @@
 
       <ul class="mt-8" v-if="!error" id="search-results">
         <li
-          class="border-transparent rounded-lg text-white-color shadow-xl mt-4 bg-cover max-w-[550px] min-h-min"
+          class="border-transparent rounded-lg text-white-color shadow-xl mt-4 bg-cover min-h-min"
           v-for="event in store.searchResult"
           :key="event.id"
           :style="{ backgroundImage: `url(${event.images?.[0].url})` }"

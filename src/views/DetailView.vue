@@ -5,7 +5,7 @@
 
   <header
     class="text-white-color h-48 border-transparent flex sticky top-0 items-end font-sans bg-cover relative"
-    :style="{ backgroundImage: `url(${currentConcert.images[1].url})` }"
+    :style="{ backgroundImage: `url(${qualityImage})` }"
   >
     <router-link
       v-if="!hasStatus"
@@ -56,12 +56,9 @@
   <main>
     <section class="bg-black-color text-white-color px-6 py-6">
       <!-- Rating-Star -->
-      <div
-        v-if="currentConcert.status === 'visited'"
-        class="flex hover:scale-110"
-      >
+      <div v-if="currentConcert.status === 'visited'" class="flex">
         <div
-          class="items-center w-4 h-4 text-black hover:cursor-pointer hover:scale-110"
+          class="w-4 h-4 text-white-color ms-1 hover:cursor-pointer"
           v-for="star in 5"
           :key="star"
           @click="setCurrentConcertRating(star)"
@@ -75,7 +72,7 @@
         </div>
       </div>
       <!-- Artist Name -->
-      <div class="flex space-x-2 mt-6">
+      <div v-if="currentArtist" class="flex space-x-2 mt-6">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -88,7 +85,7 @@
             clip-rule="evenodd"
           />
         </svg>
-        <h2 v-if="currentArtist">
+        <h2>
           {{ currentArtist.attractions[0].name }}
         </h2>
       </div>
@@ -182,7 +179,7 @@
 
         <button
           v-if="notes !== this.currentConcert.notes"
-          class="mt-6 bg-blue-500 py-2 px-3 text-white"
+          class="mt-2 bg-white-color py-2 px-3 hover:bg-gray-ash text-sm text-black-color border-2 border-gray-ash rounded"
           type="submit"
         >
           Save
@@ -190,44 +187,66 @@
       </form>
 
       <fieldset
+        class="py-4 flex"
         @change="
           store.addConcertToList($event.target.value, this.currentConcert)
         "
         id="lists"
       >
-        <input
-          id="visited"
-          name="list"
-          type="radio"
-          value="visited"
-          :checked="currentConcert.status === 'visited'"
-        />
-        <label for="visited">Visited</label>
-
-        <input
-          id="wish"
-          name="list"
-          type="radio"
-          value="wish"
-          :checked="currentConcert.status === 'wish'"
-        />
-        <label for="wish">Wishlist</label>
-
-        <input
-          id="upcoming"
-          name="list"
-          type="radio"
-          value="upcoming"
-          :checked="currentConcert.status === 'upcoming'"
-        />
-        <label for="upcoming">Upcoming</label>
+        <div>
+          <input
+            class="peer hidden"
+            id="visited"
+            name="list"
+            type="radio"
+            value="visited"
+            :checked="currentConcert.status === 'visited'"
+          />
+          <label
+            class="capitalize hover:uppercase text-gray-ash font-semibold cursor-pointer rounded-lg border border-gray-ash p-2 peer-checked:bg-black-color peer-checked:text-white-color select-none"
+            for="visited"
+            >Visited</label
+          >
+        </div>
+        <div class="px-2">
+          <input
+            class="peer hidden"
+            id="wish"
+            name="list"
+            type="radio"
+            value="wish"
+            :checked="currentConcert.status === 'wish'"
+          />
+          <label
+            class="capitalize hover:uppercase text-gray-ash font-semibold cursor-pointer rounded-lg border border-gray-ash p-2 peer-checked:bg-black-color peer-checked:text-white-color select-none"
+            for="wish"
+            >Wishlist</label
+          >
+        </div>
+        <div class="px-2">
+          <input
+            class="peer hidden"
+            id="upcoming"
+            name="list"
+            type="radio"
+            value="upcoming"
+            :checked="currentConcert.status === 'upcoming'"
+          />
+          <label
+            class="capitalize hover:uppercase text-gray-ash font-semibold cursor-pointer rounded-lg border border-gray-ash p-2 peer-checked:bg-black-color peer-checked:text-white-color select-none"
+            for="upcoming"
+            >Upcoming</label
+          >
+        </div>
       </fieldset>
       <button
+        class="mt-2 bg-black-color py-2 px-3 text-sm text-white-color border-2 border-black rounded-lg capitalize hover:uppercase"
         v-if="hasStatus"
         @click="store.removeConcertFromList($route.params.id)"
       >
         Remove from List
       </button>
+
       <template v-if="currentArtist">
         <div class="flex mt-6 aline-baseline">
           <a
@@ -300,6 +319,11 @@ export default {
         return true;
       }
       return false;
+    },
+    qualityImage() {
+      for (let image of this.currentConcert.images) {
+        if (image.height >= 600) return image.url;
+      }
     },
   },
   methods: {
