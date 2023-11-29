@@ -2,6 +2,9 @@
 export default {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
+    screens: {
+      mobile: "600px",
+    },
     colors: {
       "dark-color": "#2E223C",
       "black-color": "#000000",
