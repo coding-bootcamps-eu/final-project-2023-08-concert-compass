@@ -1,5 +1,7 @@
 <template>
-  <div class="grid grid-rows-[1fr,auto] h-screen overflow-hidden">
+  <div
+    class="grid grid-rows-[1fr,auto] h-screen overflow-hidden max-w-screen-mobile m-auto"
+  >
     <div class="overflow-auto"><router-view /></div>
     <nav
       class="grid grid-cols-4 place-content-evenly justify-items-center py-6"
