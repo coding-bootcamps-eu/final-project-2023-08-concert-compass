@@ -5,7 +5,7 @@
 
   <header
     class="text-white-color h-48 border-transparent flex sticky top-0 items-end font-sans bg-cover relative"
-    :style="{ backgroundImage: `url(${currentConcert.images[1].url})` }"
+    :style="{ backgroundImage: `url(${qualityImage})` }"
   >
     <h1
       class="text-2xl bg-gradient-black absolute left-0 right-0 bottom-0 px-6"
@@ -16,12 +16,9 @@
   <main>
     <section class="bg-black-color text-white-color px-6 py-6">
       <!-- Rating-Star -->
-      <div
-        v-if="currentConcert.status === 'visited'"
-        class="flex hover:scale-110"
-      >
+      <div v-if="currentConcert.status === 'visited'" class="flex">
         <div
-          class="items-center w-4 h-4 text-black ms-1 hover:cursor-pointer hover:scale-110"
+          class="w-4 h-4 text-white-color ms-1 hover:cursor-pointer"
           v-for="star in 5"
           :key="star"
           @click="setCurrentConcertRating(star)"
@@ -35,7 +32,7 @@
         </div>
       </div>
       <!-- Artist Name -->
-      <div class="flex space-x-2 mt-6">
+      <div v-if="currentArtist" class="flex space-x-2 mt-6">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -48,7 +45,7 @@
             clip-rule="evenodd"
           />
         </svg>
-        <h2 v-if="currentArtist">
+        <h2>
           {{ currentArtist.attractions[0].name }}
         </h2>
       </div>
@@ -227,6 +224,11 @@ export default {
         return true;
       }
       return false;
+    },
+    qualityImage() {
+      for (let image of this.currentConcert.images) {
+        if (image.height >= 600) return image.url;
+      }
     },
   },
   methods: {

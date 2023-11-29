@@ -35,7 +35,7 @@
 
       <ul class="mt-8" v-if="!error" id="search-results">
         <li
-          class="border-transparent rounded-lg text-white-color shadow-xl mt-4 bg-cover max-w-[550px] min-h-min"
+          class="border-transparent rounded-lg text-white-color shadow-xl mt-4 bg-cover min-h-min"
           v-for="event in store.searchResult"
           :key="event.id"
           :style="{ backgroundImage: `url(${event.images?.[0].url})` }"
