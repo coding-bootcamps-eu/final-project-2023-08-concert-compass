@@ -2,217 +2,204 @@
   <div v-if="!currentConcert">
     <router-link :to="{ name: 'home' }">Go back to Home</router-link>
   </div>
-  <div class="grid grid-row">
-    <div>
-      <header
-        class="align-items-start h-48 p-2 border rounded-3xl flex sticky top-0 justify-center font-sans bg-cover"
-        :style="{ backgroundImage: `url(${currentConcert.images[0].url})` }"
-      >
-        <h1 class="text-white-color m-0">{{ currentConcert.name }}</h1>
-      </header>
-    </div>
 
-    <div class="py-2 text-lg">
-      <!-- Rating Stars -->
+  <header
+    class="text-white-color h-48 border-transparent flex sticky top-0 items-end font-sans bg-cover relative"
+    :style="{ backgroundImage: `url(${currentConcert.images[1].url})` }"
+  >
+    <h1
+      class="text-2xl bg-gradient-black absolute left-0 right-0 bottom-0 px-6"
+    >
+      {{ currentConcert.name }}
+    </h1>
+  </header>
+  <main>
+    <section class="bg-black-color text-white-color px-6 py-6">
+      <!-- Rating-Star -->
       <div
-        class="flex items-center text-orange-color items-end justify-center px-2"
+        v-if="currentConcert.status === 'visited'"
+        class="flex hover:scale-110"
       >
-        <svg
-          class="items-center w-4 h-4 text-yellow-300 ms-1"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
+        <div
+          class="items-center w-4 h-4 text-black ms-1 hover:cursor-pointer hover:scale-110"
+          v-for="star in 5"
+          :key="star"
+          @click="setCurrentConcertRating(star)"
         >
-          <path
-            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
-          />
-        </svg>
-        <svg
-          class="w-4 h-4 text-yellow-300 ms-1"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path
-            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
-          />
-        </svg>
-        <svg
-          class="w-4 h-4 text-yellow-300 ms-1"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path
-            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
-          />
-        </svg>
-        <svg
-          class="w-4 h-4 text-yellow-300 ms-1"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path
-            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
-          />
-        </svg>
-        <svg
-          class="w-4 h-4 ms-1 text-gray-300 dark:text-gray-500"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path
-            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
-          />
-        </svg>
+          <p
+            class="text-black"
+            :class="{ filled: star <= this.currentConcert.rating }"
+          >
+            ★
+          </p>
+        </div>
       </div>
-      <div class="py-8 font-sans mb-0">
-        <!-- Artist Name -->
-        <p>Artist Name PLACEHOLDER</p>
-        <!-- Date & Time -->
-      </div>
-      <div class="flex space-x-2 mt-2 py-8 font-sans ml-2">
+      <!-- Artist Name -->
+      <div class="flex space-x-2 mt-6">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          id="Layer_1"
-          data-name="Layer 1"
           viewBox="0 0 24 24"
-          width="20"
-          height="20"
+          fill="currentColor"
+          class="w-6 h-6"
         >
           <path
-            d="M24,7v1H0v-1C0,4.239,2.239,2,5,2h1V1c0-.552,.448-1,1-1h0c.552,0,1,.448,1,1v1h8V1c0-.552,.448-1,1-1h0c.552,0,1,.448,1,1v1h1c2.761,0,5,2.239,5,5Zm0,10c0,3.86-3.141,7-7,7s-7-3.14-7-7,3.141-7,7-7,7,3.14,7,7Zm-5,.586l-1-1v-1.586c0-.552-.448-1-1-1h0c-.552,0-1,.448-1,1v2c0,.265,.105,.52,.293,.707l1.293,1.293c.39,.39,1.024,.39,1.414,0h0c.39-.39,.39-1.024,0-1.414Zm-11-.586c0-2.829,1.308-5.35,3.349-7H0v9c0,2.761,2.239,5,5,5h6.349c-2.041-1.65-3.349-4.171-3.349-7Z"
+            fill-rule="evenodd"
+            d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+            clip-rule="evenodd"
           />
         </svg>
+        <h2 v-if="currentArtist">
+          {{ currentArtist.attractions[0].name }}
+        </h2>
+      </div>
+      <!-- Date & Time -->
+      <div class="flex space-x-2 mt-6">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            d="M12.75 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM7.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM8.25 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM9.75 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM10.5 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM12.75 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM14.25 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z"
+          />
+          <path
+            fill-rule="evenodd"
+            d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0118 3v1.5h.75a3 3 0 013 3v11.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V7.5a3 3 0 013-3H6V3a.75.75 0 01.75-.75zm13.5 9a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5v7.5a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-7.5z"
+            clip-rule="evenodd"
+          />
+        </svg>
+
         <p>
-          {{ currentConcert.dates.start.localDate }} -
-          {{ currentConcert.dates.start.localTime }}
+          {{ currentConcert.dates.start.localDate }} &nbsp;| &nbsp;{{
+            currentConcert.dates.start.localTime.slice(0, -3)
+          }}
         </p>
       </div>
 
       <!-- Location -->
-      <div class="flex flex-col content-start break-words">
-        <div class="flex space-x-2 font-sans ml-2 mt-0">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            id="Layer_1"
-            data-name="Layer 1"
-            viewBox="0 0 24 24"
-            width="20"
-            height="20"
-          >
-            <path
-              d="M12,0A10.011,10.011,0,0,0,2,10c0,5.282,8.4,12.533,9.354,13.343l.646.546.646-.546C13.6,22.533,22,15.282,22,10A10.011,10.011,0,0,0,12,0Zm0,15a5,5,0,1,1,5-5A5.006,5.006,0,0,1,12,15Z"
-            />
-            <circle cx="12" cy="10" r="3" />
-          </svg>
+
+      <div class="flex space-x-2 mt-6">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <div>
           <h6 class="font-bold">
             {{ currentConcert._embedded.venues[0].name }}
           </h6>
+          <p class="text-sm text-left">
+            {{ currentConcert._embedded.venues[0].address.line1 }},
+            {{ currentConcert._embedded.venues[0].postalCode }}
+            <br />
+            {{ currentConcert._embedded.venues[0].city.name }},
+            {{ currentConcert._embedded.venues[0].country.countryCode }}
+          </p>
         </div>
-        <p class="text-sm self-start ml-7 text-gray-ash mt-2 text-left">
-          {{ currentConcert._embedded.venues[0].address.line1 }},
-          {{ currentConcert._embedded.venues[0].postalCode }},
-          <br />
-          {{ currentConcert._embedded.venues[0].city.name }},
-          {{ currentConcert._embedded.venues[0].country.name }}
-        </p>
       </div>
+
       <!-- Genre -->
-      <div class="flex space-x-2 mt-4 font-sans ml-2">
+      <div class="flex space-x-2 mt-6">
         <svg
-          id="Layer_1"
-          height="20"
-          viewBox="0 0 24 24"
-          width="20"
           xmlns="http://www.w3.org/2000/svg"
-          data-name="Layer 1"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-6 h-6"
         >
           <path
-            d="m22.916.691a2.992 2.992 0 0 0 -2.469-.638l-11.999 2.247a3 3 0 0 0 -2.448 2.951v11.305a3.959 3.959 0 0 0 -2-.556 4 4 0 1 0 4 4v-10.58l14-2.62v6.761a3.959 3.959 0 0 0 -2-.561 4 4 0 1 0 4 4v-14a3 3 0 0 0 -1.084-2.309z"
+            fill-rule="evenodd"
+            d="M19.952 1.651a.75.75 0 01.298.599V16.303a3 3 0 01-2.176 2.884l-1.32.377a2.553 2.553 0 11-1.403-4.909l2.311-.66a1.5 1.5 0 001.088-1.442V6.994l-9 2.572v9.737a3 3 0 01-2.176 2.884l-1.32.377a2.553 2.553 0 11-1.402-4.909l2.31-.66a1.5 1.5 0 001.088-1.442V9.017 5.25a.75.75 0 01.544-.721l10.5-3a.75.75 0 01.658.122z"
+            clip-rule="evenodd"
           />
         </svg>
+
         <p v-if="currentConcert.classifications[0].genre.name">
           {{ currentConcert.classifications[0].genre.name }}
         </p>
       </div>
-      <!-- Links -->
-    </div>
-  </div>
+    </section>
 
-  <form v-if="hasStatus" @submit.prevent="currentConcert.notes = notes">
-    <label for="notes">Notes</label>
-    <textarea
-      v-model="currentConcert.notes"
-      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-      type="text"
-      name="concert-notes"
-      id="notes"
-      placeholder="Write some notes about the concert"
-    ></textarea>
+    <section class="border-transparent rounden-t-lg px-6 py-6">
+      <!-- Add to List -->
+      <form v-if="hasStatus" @submit.prevent="currentConcert.notes = notes">
+        <label for="notes">Notes</label>
+        <textarea
+          v-model="currentConcert.notes"
+          class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          type="text"
+          name="concert-notes"
+          id="notes"
+          placeholder="Write some notes about the concert"
+        ></textarea>
 
-    <button
-      v-if="notes !== this.currentConcert.notes"
-      class="mt-6 bg-blue-500 py-2 px-3 text-white"
-      type="submit"
-    >
-      Save
-    </button>
-  </form>
+        <button
+          v-if="notes !== this.currentConcert.notes"
+          class="mt-6 bg-blue-500 py-2 px-3 text-white"
+          type="submit"
+        >
+          Save
+        </button>
+      </form>
 
-  <fieldset
-    @change="store.addConcertToList($event.target.value, this.currentConcert)"
-    id="lists"
-  >
-    <input
-      id="visited"
-      name="list"
-      type="radio"
-      value="visited"
-      :checked="currentConcert.status === 'visited'"
-    />
-    <label for="visited">Visited</label>
+      <fieldset
+        @change="
+          store.addConcertToList($event.target.value, this.currentConcert)
+        "
+        id="lists"
+      >
+        <input
+          id="visited"
+          name="list"
+          type="radio"
+          value="visited"
+          :checked="currentConcert.status === 'visited'"
+        />
+        <label for="visited">Visited</label>
 
-    <input
-      id="wish"
-      name="list"
-      type="radio"
-      value="wish"
-      :checked="currentConcert.status === 'wish'"
-    />
-    <label for="wish">Wishlist</label>
+        <input
+          id="wish"
+          name="list"
+          type="radio"
+          value="wish"
+          :checked="currentConcert.status === 'wish'"
+        />
+        <label for="wish">Wishlist</label>
 
-    <input
-      id="upcoming"
-      name="list"
-      type="radio"
-      value="upcoming"
-      :checked="currentConcert.status === 'upcoming'"
-    />
-    <label for="upcoming">Upcoming</label>
-  </fieldset>
-  <button
-    v-if="hasStatus"
-    @click="store.removeConcertFromList($route.params.id)"
-  >
-    Remove from List
-  </button>
-  <template v-if="currentArtist">
-    <a :href="currentArtist.attractions?.[0].externalLinks?.spotify?.[0].url"
-      >Spotify</a
-    >
-    <a :href="currentArtist.attractions?.[0].externalLinks?.youtube?.[0].url"
-      >Youtube</a
-    >
-    <h2>Artist Name: {{ currentArtist.attractions[0].name }}</h2>
-  </template>
+        <input
+          id="upcoming"
+          name="list"
+          type="radio"
+          value="upcoming"
+          :checked="currentConcert.status === 'upcoming'"
+        />
+        <label for="upcoming">Upcoming</label>
+      </fieldset>
+      <button
+        v-if="hasStatus"
+        @click="store.removeConcertFromList($route.params.id)"
+      >
+        Remove from List
+      </button>
+      <template v-if="currentArtist">
+        <a
+          :href="currentArtist.attractions?.[0].externalLinks?.spotify?.[0].url"
+          >Spotify</a
+        >
+        <a
+          :href="currentArtist.attractions?.[0].externalLinks?.youtube?.[0].url"
+          >Youtube</a
+        >
+      </template>
+    </section>
+  </main>
 </template>
 
 <script>
@@ -242,6 +229,13 @@ export default {
       return false;
     },
   },
+  methods: {
+    setCurrentConcertRating(star) {
+      this.currentConcert.status === "visited"
+        ? (this.currentConcert.rating = star)
+        : (this.currentConcert.rating = 0);
+    },
+  },
 
   created() {
     this.notes = this.currentConcert.notes ?? "";
@@ -258,3 +252,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.filled {
+  color: #ffbb00;
+}
+</style>
