@@ -35,7 +35,7 @@
         </div>
       </div>
       <!-- Artist Name -->
-      <div class="flex space-x-2 mt-6">
+      <div v-if="currentArtist" class="flex space-x-2 mt-6">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -48,7 +48,7 @@
             clip-rule="evenodd"
           />
         </svg>
-        <h2 v-if="currentArtist">
+        <h2>
           {{ currentArtist.attractions[0].name }}
         </h2>
       </div>
