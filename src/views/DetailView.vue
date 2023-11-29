@@ -15,63 +15,24 @@
   </header>
   <main>
     <section class="bg-black-color text-white-color px-6 py-6">
-      <!-- Rating Stars -->
-      <div class="flex items-center text-orange-color items-end">
-        <svg
-          class="items-center w-4 h-4 text-yellow-300 ms-1"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
+      <!-- Rating-Star -->
+      <div
+        v-if="currentConcert.status === 'visited'"
+        class="flex hover:scale-110"
+      >
+        <div
+          class="items-center w-4 h-4 text-black ms-1 hover:cursor-pointer hover:scale-110"
+          v-for="star in 5"
+          :key="star"
+          @click="setCurrentConcertRating(star)"
         >
-          <path
-            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
-          />
-        </svg>
-        <svg
-          class="w-4 h-4 text-yellow-300 ms-1"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path
-            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
-          />
-        </svg>
-        <svg
-          class="w-4 h-4 text-yellow-300 ms-1"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path
-            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
-          />
-        </svg>
-        <svg
-          class="w-4 h-4 text-yellow-300 ms-1"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path
-            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
-          />
-        </svg>
-        <svg
-          class="w-4 h-4 ms-1 text-gray-300 dark:text-gray-500"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path
-            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
-          />
-        </svg>
+          <p
+            class="text-black"
+            :class="{ filled: star <= this.currentConcert.rating }"
+          >
+            ★
+          </p>
+        </div>
       </div>
       <!-- Artist Name -->
       <div class="flex space-x-2 mt-6">
@@ -110,8 +71,9 @@
         </svg>
 
         <p>
-          {{ currentConcert.dates.start.localDate }} -
-          {{ currentConcert.dates.start.localTime }}
+          {{ currentConcert.dates.start.localDate }} &nbsp;| &nbsp;{{
+            currentConcert.dates.start.localTime.slice(0, -3)
+          }}
         </p>
       </div>
 
@@ -136,7 +98,7 @@
           </h6>
           <p class="text-sm text-left">
             {{ currentConcert._embedded.venues[0].address.line1 }},
-            {{ currentConcert._embedded.venues[0].postalCode }},
+            {{ currentConcert._embedded.venues[0].postalCode }}
             <br />
             {{ currentConcert._embedded.venues[0].city.name }},
             {{ currentConcert._embedded.venues[0].country.countryCode }}
@@ -267,6 +229,13 @@ export default {
       return false;
     },
   },
+  methods: {
+    setCurrentConcertRating(star) {
+      this.currentConcert.status === "visited"
+        ? (this.currentConcert.rating = star)
+        : (this.currentConcert.rating = 0);
+    },
+  },
 
   created() {
     this.notes = this.currentConcert.notes ?? "";
@@ -283,3 +252,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.filled {
+  color: #ffbb00;
+}
+</style>
