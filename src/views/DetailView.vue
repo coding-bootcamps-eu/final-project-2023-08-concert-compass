@@ -169,6 +169,7 @@
             :href="
               currentArtist.attractions?.[0].externalLinks?.youtube?.[0].url
             "
+            target="_blank"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
