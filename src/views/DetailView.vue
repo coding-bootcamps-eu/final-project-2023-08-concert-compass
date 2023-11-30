@@ -163,36 +163,86 @@
             {{ currentConcert.classifications[0].genre.name }}
           </p>
         </div>
+        <div class="flex mt-6 aline-baseline">
+          <a
+            class="flex space-x-3"
+            :href="
+              currentArtist.attractions?.[0].externalLinks?.youtube?.[0].url
+            "
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              x="0px"
+              y="0px"
+              width="20"
+              height="20"
+              viewBox="0 0 50 50"
+            >
+              <path
+                d="M 44.898438 14.5 C 44.5 12.300781 42.601563 10.699219 40.398438 10.199219 C 37.101563 9.5 31 9 24.398438 9 C 17.800781 9 11.601563 9.5 8.300781 10.199219 C 6.101563 10.699219 4.199219 12.199219 3.800781 14.5 C 3.398438 17 3 20.5 3 25 C 3 29.5 3.398438 33 3.898438 35.5 C 4.300781 37.699219 6.199219 39.300781 8.398438 39.800781 C 11.898438 40.5 17.898438 41 24.5 41 C 31.101563 41 37.101563 40.5 40.601563 39.800781 C 42.800781 39.300781 44.699219 37.800781 45.101563 35.5 C 45.5 33 46 29.398438 46.101563 25 C 45.898438 20.5 45.398438 17 44.898438 14.5 Z M 19 32 L 19 18 L 31.199219 25 Z"
+              ></path>
+            </svg>
+            <p>Youtube</p>
+          </a>
+        </div>
       </div>
       <div class="bg-white border-transparent rounded-t-3xl w-full h-5"></div>
     </section>
 
     <section class="px-6 py-6">
+      <div v-if="hasStatus" class="flex">
+        <label class="font-bold text-lg" for="notes">Notes</label>
+
+        <button v-if="!showTextarea" class="ml-4" @click="showTextarea = true">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-4 h-4 text-violett-color"
+          >
+            <path
+              d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
+            />
+          </svg>
+        </button>
+      </div>
       <form
         class="mb-6"
-        v-if="hasStatus"
+        v-if="hasStatus && showTextarea"
         @submit.prevent="currentConcert.notes = notes"
       >
-        <label for="notes">Notes</label>
         <textarea
+          class="focus:outline-none focus:ring-2 focus:ring-violett-color block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400sm:text-sm focus:border-black"
+          v-if="showTextarea"
           v-model="notes"
-          class="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400sm:text-sm focus:border-black"
-          type="text"
-          name="concert-notes"
-          id="notes"
-          placeholder="Write some notes about the concert"
+          rows="4"
+          cols="50"
         ></textarea>
-
         <button
-          v-if="notes !== this.currentConcert.notes"
-          class="mt-2 bg-white p-2 font-semibold text-sm text-black border border-gray-ash rounded-lg active:bg-black active:text-white transition-transform"
+          class="mt-2 bg-violett-color p-2 font-semibold text-sm text-white border border-gray-ash rounded-lg active:text-black active:bg-transparent"
           type="submit"
+          @click="saveNotes()"
         >
           Save
         </button>
       </form>
+
+      <div v-if="!showTextarea && hasStatus" id="output" class="mb-6 flex">
+        <p v-if="truncatedText" class="flex flex-col items-start">
+          {{ truncatedText }}
+          <button
+            class="text-violett-color font-semibold"
+            id="read-more"
+            @click="showFullText()"
+          >
+            Read More
+          </button>
+        </p>
+        <p v-else>{{ notes }}</p>
+      </div>
+
       <!-- Add to List -->
-      <label for="lists">Add Concert to a list</label>
+      <label for="lists" class="font-bold text-lg">Add concert to a list</label>
       <fieldset
         class="py-4 flex"
         @change="
@@ -254,29 +304,7 @@
         Remove from List
       </button>
 
-      <template v-if="currentArtist">
-        <div class="flex mt-6 aline-baseline">
-          <a
-            class="flex"
-            :href="
-              currentArtist.attractions?.[0].externalLinks?.youtube?.[0].url
-            "
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              x="0px"
-              y="0px"
-              width="20"
-              height="20"
-              viewBox="0 0 50 50"
-            >
-              <path
-                d="M 44.898438 14.5 C 44.5 12.300781 42.601563 10.699219 40.398438 10.199219 C 37.101563 9.5 31 9 24.398438 9 C 17.800781 9 11.601563 9.5 8.300781 10.199219 C 6.101563 10.699219 4.199219 12.199219 3.800781 14.5 C 3.398438 17 3 20.5 3 25 C 3 29.5 3.398438 33 3.898438 35.5 C 4.300781 37.699219 6.199219 39.300781 8.398438 39.800781 C 11.898438 40.5 17.898438 41 24.5 41 C 31.101563 41 37.101563 40.5 40.601563 39.800781 C 42.800781 39.300781 44.699219 37.800781 45.101563 35.5 C 45.5 33 46 29.398438 46.101563 25 C 45.898438 20.5 45.398438 17 44.898438 14.5 Z M 19 32 L 19 18 L 31.199219 25 Z"
-              ></path>
-            </svg>
-            <p class="pl-2">Youtube</p>
-          </a>
-        </div>
-      </template>
+      <template v-if="currentArtist"> </template>
 
       <iframe
         v-if="getSpotifyId"
@@ -308,6 +336,8 @@ export default {
     return {
       currentArtist: null,
       notes: "",
+      truncatedText: "",
+      showTextarea: false,
     };
   },
   computed: {
@@ -340,6 +370,16 @@ export default {
         ? (this.currentConcert.rating = star)
         : (this.currentConcert.rating = 0);
     },
+    saveNotes() {
+      this.truncatedText =
+        this.notes.length > 50 ? this.notes.substring(0, 50) : "";
+
+      this.showTextarea = !this.showTextarea;
+      this.store.getConcertById(this.$route.params.id).notes = this.notes;
+    },
+    showFullText() {
+      this.truncatedText = "";
+    },
   },
 
   created() {
@@ -354,6 +394,10 @@ export default {
       .then((response) => response.json())
       .then((data) => (this.currentArtist = data._embedded))
       .catch((error) => console.log(error));
+  },
+  mounted() {
+    this.truncatedText =
+      this.notes.length > 50 ? this.notes.substring(0, 50) : "";
   },
 };
 </script>
