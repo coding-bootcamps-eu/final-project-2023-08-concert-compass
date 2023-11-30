@@ -7,17 +7,17 @@
   <main class="mx-6">
     <form class="flex" @submit.prevent="searchForConcerts">
       <input
-        class="border border-gray-ash rounded-lg shadow-xl p-2 w-[90%] focus:outline-blue placeholder:text-slate-400 tracking-wide"
+        class="border border-gray-ash rounded-lg shadow-xl p-2 w-[90%] focus:outline-none focus:ring-2 ring-violett-color placeholder:text-slate-400 tracking-wide"
         type="text"
         v-model.trim="store.searchKeyword"
         placeholder="Search for artists"
       />
       <button
-        class="border border-gray-ash py-2 px-4 rounded-lg ml-6 shadow-xl font-semibold tracking-wide capitalize cursor-pointer"
+        class="border border-gray-ash py-2 px-4 rounded-lg ml-6 shadow-xl font-semibold tracking-wide capitalize cursor-pointer active:bg-violett-color active:border-violett-color active:fill-white"
         type="submit"
       >
         <svg
-          class="fill-gray-ash"
+          class="active:fill-white"
           xmlns="http://www.w3.org/2000/svg"
           id="Outline"
           viewBox="0 0 24 24"

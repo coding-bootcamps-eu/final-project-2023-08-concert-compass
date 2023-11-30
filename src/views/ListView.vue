@@ -29,6 +29,9 @@
     </h1>
   </header>
   <main class="mx-6">
+    <p v-if="currentList.length == 0" class="text-center">
+      You currently haven't saved any concerts to this list.
+    </p>
     <ul class="mt-18">
       <li
         class="border-transparent rounded-lg shadow-xl mt-4 text-white bg-cover min-h-min"
