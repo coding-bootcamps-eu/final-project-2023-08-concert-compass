@@ -81,7 +81,7 @@ export default {
     const currentTime = new Date().getTime();
     const timeDifference =
       Math.abs(currentTime - this.store.searchTimestamp) / 1000;
-    if (timeDifference > 120) {
+    if (timeDifference > 43200) {
       this.store.searchResult = [];
     }
   },
