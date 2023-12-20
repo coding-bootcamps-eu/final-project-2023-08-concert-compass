@@ -5,7 +5,6 @@ Concert Compass is an app to track concerts. It is working with the ticketmaster
 The app is developed with:
 
 - JavaScript
-- Tailwind
-- Vue
-- Vue router
-- Node
+- Vue.js & Vue Router
+- Tailwind CSS
+- Pinia
